@@ -1073,6 +1073,10 @@ class PreTrainedTokenizer(PreTrainedTokenizerBase):
         legacy_added_tokens = set(self._added_tokens_encoder.keys()) - set(self.all_special_tokens) | {
             token for token in self.additional_special_tokens if self.convert_tokens_to_ids(token) >= self.vocab_size
         }
+
+        if isinstance(filtered_tokens, str):
+            filtered_tokens = [filtered_tokens]
+
         # To avoid mixing byte-level and unicode for byte-level BPT
         # we need to build string separately for added tokens and byte-level tokens
         # cf. https://github.com/huggingface/transformers/issues/1133
